@@ -12,11 +12,11 @@ namespace FabrikamResidences_Activities.Data
         internal static void RegisterDataService(IServiceCollection services, IConfiguration configuration)
         {
             //This is a Singleton due to in memory data
-            services.AddSingleton<IPortalRepository, PortalRepository_Memory>();     
+            // services.AddSingleton<IPortalRepository, PortalRepository_Memory>();     
 
             // Uncomment after completing Module 3 Demo 1 
             //  and ready to use the ADONet verion of the repository
-            // services.AddScoped<IPortalRepository, PortalRepository_ADONet>();
+            services.AddScoped<IPortalRepository, PortalRepository_ADONet>();
 
             // Uncomment after completing Module 3 Demo 2
             //  and ready to use the EF Core version of the repository

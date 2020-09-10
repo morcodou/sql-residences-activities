@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using FabrikamResidences_Activities.Models;
@@ -11,19 +12,19 @@ namespace FabrikamResidences_Activities.Data
 {
 
 #if (NOT_MODULE3_DEMO1)
-// #else                                                    // 1) uncomment line during Demo 1 of Module 3
+#else                                                    // 1) uncomment line during Demo 1 of Module 3
 
     public class PortalRepository_ADONet : IPortalRepository
     {
 
-        // private SqlConnection _connection;               // 2) uncomment line 
+        private SqlConnection _connection;               // 2) uncomment line 
         private ILogger _logger;
 
         private const string PortalActivityTableName = "PortalActivity";
         private const string AttendeeTableName = "Attendee";
 
         public PortalRepository_ADONet(IConfiguration config, ILogger<PortalRepository_ADONet> logger)
-        {            
+        {
             // 4) Retrieve and Configure the connection string
             //  - Retrieve connection string from Azure SQL Database blade in the Azure Portal
             //  - Replace the User ID and Password values 
@@ -38,7 +39,7 @@ namespace FabrikamResidences_Activities.Data
             //  - Naming the connection "AzureDB"
 
             // Note: Using the above approach allows the following GetConnectionString to work in either environment
-            // _connection = new SqlConnection(config.GetConnectionString("AzureDB")); //3) uncomment
+            _connection = new SqlConnection(config.GetConnectionString("AzureDB")); //3) uncomment
 
             _logger = logger;
         }
@@ -48,28 +49,28 @@ namespace FabrikamResidences_Activities.Data
         public void InitializeDatabase()
         {
 
-//             _connection.Open();                          // 5) uncomment all #5
+            _connection.Open();                          // 5) uncomment all #5
 
 
-// #if (DEBUG)                                              // 9) uncomment all #9
-//             ClearDatabase();                             // 9) then review this method
-// #endif                                                   // 9)
+            // #if (DEBUG)                                              // 9) uncomment all #9
+            //             ClearDatabase();                             // 9) then review this method
+            // #endif                                                   // 9)
 
-//             if (!IsSchemaReady())                        // 7) uncomment all #7 lines and review this method 
-//             {                                            // 7)
+            if (!IsSchemaReady())                        // 7) uncomment all #7 lines and review this method 
+            {                                            // 7)
 
-//                 CreateSchema();                          // 6) uncomment and review this method 
+                CreateSchema();                          // 6) uncomment and review this method 
 
-// #if (DEBUG)                                              // 8) uncomment all #8
-//                 SeedActivity();                          // 8) then review this method
-// #endif                                                   // 8)
+                // #if (DEBUG)                                              // 8) uncomment all #8
+                //                 SeedActivity();                          // 8) then review this method
+                // #endif                                                   // 8)
 
-//             }                                            // 7) 
+            }                                            // 7) 
 
 
-//             _connection.Close();                         // 5) uncomment
+            _connection.Close();                         // 5) uncomment
         }
-        
+
         private void CreateSchema()
         {
             ExecuteNonQuery($@"
@@ -128,8 +129,8 @@ namespace FabrikamResidences_Activities.Data
 
             ");
 
-        }        
-        
+        }
+
         private void ClearDatabase()
         {
             ExecuteNonQuery($"DROP TABLE IF EXISTS {PortalActivityTableName};");
