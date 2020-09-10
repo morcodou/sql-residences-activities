@@ -16,13 +16,12 @@ namespace FabrikamResidences_Activities.Data
 
             // Uncomment after completing Module 3 Demo 1 
             //  and ready to use the ADONet verion of the repository
-            services.AddScoped<IPortalRepository, PortalRepository_ADONet>();
+            // services.AddScoped<IPortalRepository, PortalRepository_ADONet>();
 
             // Uncomment after completing Module 3 Demo 2
             //  and ready to use the EF Core version of the repository
-            // services.AddDbContext<PortalContext>(options => options.UseSqlServer(configuration.GetConnectionString("AzureDB")));
-            //services.AddScoped<IPortalRepository, PortalRepository_EFCore>();
-   
+            services.AddDbContext<PortalContext>(options => options.UseSqlServer(configuration.GetConnectionString("AzureDB")));
+            services.AddScoped<IPortalRepository, PortalRepository_EFCore>();
         }
 
         public static IWebHost InitializeDatabase(this IWebHost webHost)
